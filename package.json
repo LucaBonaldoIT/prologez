@@ -1,0 +1,50 @@
+{
+  "name": "prologez",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Interactive, Jupyter-style course for learning Prolog in the browser, powered by SWI-Prolog WebAssembly.",
+  "license": "MIT",
+  "author": "Luca Bonaldo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucaBonaldoIT/prologez.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LucaBonaldoIT/prologez/issues"
+  },
+  "homepage": "https://github.com/LucaBonaldoIT/prologez#readme",
+  "keywords": [
+    "prolog",
+    "swi-prolog",
+    "webassembly",
+    "education",
+    "notebook",
+    "logic-programming"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "verify": "node scripts/verify.mjs",
+    "verify:stepper": "node scripts/verify-stepper.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "@codemirror/autocomplete": "^6.18.0",
+    "@codemirror/commands": "^6.8.0",
+    "@codemirror/language": "^6.11.0",
+    "@codemirror/state": "^6.5.0",
+    "@codemirror/view": "^6.36.0",
+    "@lezer/highlight": "^1.2.0",
+    "swipl-wasm": "^8.2.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.9.9",
+    "vite": "^8.3.2"
+  }
+}

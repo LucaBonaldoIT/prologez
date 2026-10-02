@@ -1,0 +1,26 @@
+name: Bug report
+description: Something is broken or wrong
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you expect instead?
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Where?
+      description: Lesson id / URL (e.g. #/lesson/lists) and the cell
+  - type: textarea
+    id: repro
+    attributes:
+      label: Code and steps to reproduce
+      render: prolog
+  - type: input
+    id: env
+    attributes:
+      label: Browser and device
+      placeholder: Safari 18 on iPhone 15

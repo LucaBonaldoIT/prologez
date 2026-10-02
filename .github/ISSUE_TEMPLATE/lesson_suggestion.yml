@@ -1,0 +1,16 @@
+name: Lesson or exercise suggestion
+description: Propose new content or an improvement to existing content
+labels: [content]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: Idea
+      description: Topic, exercise, or the explanation that confused you.
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Example code (optional)
+      render: prolog
