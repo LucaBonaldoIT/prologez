@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#121214" media="(prefers-color-scheme: dark)" />
-    <meta
-      name="description"
-      content="An interactive notebook for learning Prolog. Every concept comes with code you can edit and run in your browser."
-    />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>PrologEZ: learn logic programming by running it</title>
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <!--SEO_HEAD-->
+    <title>PrologEZ: Learn Prolog interactively in your browser</title>
     <script>
       try {
         const t = localStorage.getItem('plnb:theme');
@@ -19,7 +19,11 @@
     </script>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app"><!--SEO_BODY--></div>
+    <noscript
+      >PrologEZ is an interactive Prolog course and needs JavaScript to run the examples. The lesson
+      text is still readable.</noscript
+    >
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

@@ -4,9 +4,9 @@ import { md, program, query, exercise, lesson } from './dsl.js';
 export const clplab = lesson({
   id: 'clplab',
   part: 'Advanced',
-  title: 'Constraints in practice: is vs #=, queens, sudoku, knapsack',
+  title: 'Constraints in practice',
   summary:
-    'Arithmetic that runs in any direction, residual constraints, labeling strategies, and optimisation.',
+    'is vs #=, N queens, sudoku and knapsack: arithmetic that runs in any direction, residual constraints, labeling and optimisation.',
   blocks: [
     md(`
 This lesson collects five programs on **constraints in Prolog**, all using \`library(clpfd)\`. Every one of them starts with

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f7f6f2"/>
+  <rect x="0" y="0" width="1200" height="14" fill="#b02e0c"/>
+  <rect x="72" y="84" width="96" height="96" rx="22" fill="#b02e0c"/>
+  <text x="120" y="148" font-family="Menlo, Monaco, 'DejaVu Sans Mono', monospace" font-size="46" font-weight="700" text-anchor="middle" fill="#fff">?-</text>
+  <text x="192" y="152" font-family="Helvetica, Arial, sans-serif" font-size="68" font-weight="800" fill="#1d1c1a">Prolog<tspan fill="#b02e0c">EZ</tspan></text>
+  <text x="72" y="268" font-family="Helvetica, Arial, sans-serif" font-size="62" font-weight="800" fill="#1d1c1a">Learn Prolog by running it.</text>
+  <text x="72" y="332" font-family="Helvetica, Arial, sans-serif" font-size="30" fill="#3c3a36">Interactive lessons, auto-checked exercises and a</text>
+  <text x="72" y="374" font-family="Helvetica, Arial, sans-serif" font-size="30" fill="#3c3a36">step-by-step interpreter. Real SWI-Prolog in your browser.</text>
+  <rect x="72" y="428" width="680" height="128" rx="16" fill="#ffffff" stroke="#e2dfd5" stroke-width="2"/>
+  <text font-family="Menlo, Monaco, 'DejaVu Sans Mono', monospace" font-size="26" fill="#1d1c1a">
+    <tspan x="100" y="474" fill="#8a8578">% a taste</tspan>
+    <tspan x="100" y="512" fill="#b02e0c">?-</tspan><tspan>&#160;grandparent(tom, Who).</tspan>
+    <tspan x="100" y="544" fill="#0b7a6b" font-weight="700">Who = ann.</tspan>
+  </text>
+  <text x="1128" y="590" font-family="Helvetica, Arial, sans-serif" font-size="26" font-weight="600" text-anchor="end" fill="#6e6a60">prologez.lucabonaldo.dev</text>
+</svg>

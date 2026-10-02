@@ -601,14 +601,14 @@ main {
 .prose p {
   margin: 0 0 14px;
 }
-.prose h3 {
+.prose h2 {
   margin: 28px 0 10px;
   color: var(--ink);
   font-size: 22px;
   line-height: 1.25;
   letter-spacing: -0.015em;
 }
-.prose h4 {
+.prose h3 {
   margin: 24px 0 8px;
   color: var(--ink);
   font-size: 17px;

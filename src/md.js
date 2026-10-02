@@ -39,7 +39,7 @@ export function renderMarkdown(src) {
     }
     const h = /^(#{3,4})\s+(.*)$/.exec(line);
     if (h) {
-      const level = h[1].length;
+      const level = h[1].length - 1; // ### -> h2, #### -> h3 (the page title is the h1)
       out.push(`<h${level}>${inline(h[2])}</h${level}>`);
       i++;
       continue;

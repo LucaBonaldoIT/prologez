@@ -38,6 +38,18 @@
 3. **Control & the database**: cut & if-then-else · negation · all-solutions · assert/retract/clause · higher-order · exceptions
 4. **Advanced**: DCGs · difference lists · generate & test · CLP(FD) · constraints in practice (is vs #=, queens, sudoku, knapsack) · graph search · operators & DSLs · solving goals as terms · meta-interpreters · symbolic computation · Sudoku capstone
 
+## SEO and deployment
+
+The app uses real paths (`/`, `/lesson/<id>/`, `/playground/`, `/about/`). `npm run build` (or `./build.sh`)
+runs `vite build` and then `scripts/prerender.mjs`, which writes a static, crawlable HTML page for every route
+into `dist/`: unique `<title>` and meta description, canonical URL, Open Graph and Twitter tags, JSON-LD
+(`Course`, `LearningResource`, `BreadcrumbList`, `Person`), the lesson text itself, plus `sitemap.xml`, `robots.txt`
+and `404.html`. The app takes over as soon as the JavaScript runs. Old `#/lesson/...` links are upgraded.
+
+The production URL lives in `src/seo.js` (`SITE.url`, default `https://prologez.lucabonaldo.dev`); override it
+at build time with `SITE_URL=https://example.com npm run build`. Any static host works, since every route is a real
+file; point 404s at `404.html`.
+
 ## Run it
 
 ```sh

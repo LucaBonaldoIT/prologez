@@ -1,6 +1,8 @@
 import './style.css';
 import { lessons, parts } from './lessons/index.js';
 import { mountSearch } from './search.js';
+import { NOTES } from './about.js';
+import { pageMeta, applyMeta, lessonPath } from './seo.js';
 import { renderLesson } from './notebook.js';
 import { renderMarkdown } from './md.js';
 import { load, save, removeAll } from './store.js';
@@ -9,6 +11,7 @@ import { examples } from './playground.js';
 import { program, query } from './lessons/dsl.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
+const slug = (s) => s.toLowerCase().replace(/[^a-z]+/g, '-');
 const esc = (s) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
@@ -36,7 +39,7 @@ const app = $('#app');
 app.innerHTML = `
   <header class="topbar">
     <button class="icon-btn menu-btn" aria-label="Open lessons menu" aria-controls="sidebar" aria-expanded="false">${ICONS.menu}</button>
-    <a class="brand" href="#/"><span class="logo" aria-hidden="true">?-</span><span class="brand-text">Prolog<span class="brand-ez">EZ</span></span></a>
+    <a class="brand" href="/"><span class="logo" aria-hidden="true">?-</span><span class="brand-text">Prolog<span class="brand-ez">EZ</span></span></a>
     <div class="spacer"></div>
     <div class="search-host"></div>
     <a class="icon-btn gh-btn" href="https://github.com/LucaBonaldoIT/prologez" target="_blank" rel="noopener noreferrer" aria-label="PrologEZ on GitHub" title="PrologEZ on GitHub">${ICONS.github}</a>
@@ -51,9 +54,7 @@ app.innerHTML = `
 let pendingHit = null;
 mountSearch($('.search-host'), ({ id, block }) => {
   pendingHit = { id, block };
-  const target = `#/lesson/${id}`;
-  if (location.hash === target) route();
-  else location.hash = target;
+  navigate(lessonPath(id));
 });
 /** After a search pick: scroll to the matching block and flash it. */
 function applyPendingHit() {
@@ -122,7 +123,7 @@ function renderSidebar(activeId) {
         <ul>${p.lessons
           .map((l) => {
             n++;
-            return `<li><a href="#/lesson/${l.id}" class="${l.id === activeId ? 'active' : ''}" ${l.id === activeId ? 'aria-current="page"' : ''}>
+            return `<li><a href="${lessonPath(l.id)}" class="${l.id === activeId ? 'active' : ''}" ${l.id === activeId ? 'aria-current="page"' : ''}>
               <span class="nav-num ${done.has(l.id) ? 'is-done' : ''}">${done.has(l.id) ? ICONS.check : n}</span>
               <span class="nav-title">${esc(l.title)}</span></a></li>`;
           })
@@ -133,11 +134,11 @@ function renderSidebar(activeId) {
     <div class="nav-group">
       <div class="nav-part">Tools</div>
       <ul>
-        <li><a href="#/playground" class="${activeId === 'playground' ? 'active' : ''}"><span class="nav-num alt">›_</span><span class="nav-title">Playground</span></a></li>
-        <li><a href="#/notes" class="${activeId === 'notes' ? 'active' : ''}"><span class="nav-num alt">i</span><span class="nav-title">About this notebook</span></a></li>
+        <li><a href="/playground/" class="${activeId === 'playground' ? 'active' : ''}"><span class="nav-num alt">›_</span><span class="nav-title">Playground</span></a></li>
+        <li><a href="/about/" class="${activeId === 'about' ? 'active' : ''}"><span class="nav-num alt">i</span><span class="nav-title">About this notebook</span></a></li>
       </ul>
     </div>
-    <p class="credit">Made by <a href="https://github.com/LucaBonaldoIT" target="_blank" rel="noopener noreferrer">Luca Bonaldo</a></p>`;
+    <p class="credit">Made by <a href="https://lucabonaldo.dev/" target="_blank" rel="author noopener">Luca Bonaldo</a></p>`;
 }
 
 /* ---------- views ---------- */
@@ -155,8 +156,8 @@ function viewHome() {
       <h1>Learn Prolog by <span class="hl">running it</span>.</h1>
       <p class="hero-lede">A notebook for logic programming. Start with facts and queries, finish with grammars, puzzles and meta-interpreters. Every idea comes with live code you can edit and execute in your browser, real SWI-Prolog, no install.</p>
       <div class="hero-cta">
-        <a class="btn btn-primary btn-lg" href="#/lesson/${next.id}">${started ? 'Continue' : 'Start learning'} ${ICONS.arrow}</a>
-        <a class="btn btn-lg" href="#/playground">Open the playground</a>
+        <a class="btn btn-primary btn-lg" href="${lessonPath(next.id)}">${started ? 'Continue' : 'Start learning'} ${ICONS.arrow}</a>
+        <a class="btn btn-lg" href="/playground/">Open the playground</a>
       </div>
       <ul class="hero-points">
         <li><strong>Read</strong> a short explanation</li>
@@ -173,12 +174,12 @@ function viewHome() {
     ${parts
       .map(
         (p) => `
-      <section class="curriculum">
+      <section class="curriculum" id="${slug(p.name)}">
         <h2>${esc(p.name)}</h2>
         <div class="cards">${p.lessons
           .map((l) => {
             n++;
-            return `<a class="card ${done.has(l.id) ? 'is-done' : ''}" href="#/lesson/${l.id}">
+            return `<a class="card ${done.has(l.id) ? 'is-done' : ''}" href="${lessonPath(l.id)}">
               <span class="card-num">${done.has(l.id) ? ICONS.check : n}</span>
               <span class="card-body"><span class="card-title">${esc(l.title)}</span><span class="card-sum">${esc(l.summary)}</span></span></a>`;
           })
@@ -208,8 +209,8 @@ function viewLesson(id) {
       <div class="notebook" id="notebook"></div>
       <footer class="lesson-foot">
         <div class="pager">
-          ${prev ? `<a class="btn" href="#/lesson/${prev.id}">${ICONS.arrowLeft}<span>${esc(prev.title)}</span></a>` : '<span></span>'}
-          ${next ? `<a class="btn btn-primary" data-act="next" href="#/lesson/${next.id}"><span>${esc(next.title)}</span>${ICONS.arrow}</a>` : `<a class="btn btn-primary" data-act="next" href="#/playground"><span>Go to the playground</span>${ICONS.arrow}</a>`}
+          ${prev ? `<a class="btn" href="${lessonPath(prev.id)}">${ICONS.arrowLeft}<span>${esc(prev.title)}</span></a>` : '<span></span>'}
+          ${next ? `<a class="btn btn-primary" data-act="next" href="${lessonPath(next.id)}"><span>${esc(next.title)}</span>${ICONS.arrow}</a>` : `<a class="btn btn-primary" data-act="next" href="/playground/"><span>Go to the playground</span>${ICONS.arrow}</a>`}
         </div>
       </footer>
     </article>`;
@@ -317,75 +318,86 @@ function viewPlayground() {
   );
 }
 
-const NOTES = `
-### What is covered
-
-Besides the core language, the lessons cover logic programming in depth: the **syntax and execution model**, **resolution and unification** (resolvents, substitutions, most general unifiers), **Peano arithmetic** and data types programmed from scratch, **full relationality**, **tail recursion and immutability**, **searching the solution space**, **cut**, **term inspection**, **operators and DSLs**, **dynamic theories** and every **metainterpreter** variant (resolution, vanilla, built-ins and control, reverse order, tracing with a size bound), and a hands-on **constraint programming** lesson. Programs whose names clash with built-ins of other systems may differ slightly from other environments; the lessons say so where it matters.
-
-### Credits
-
-PrologEZ is created by [Luca Bonaldo](https://github.com/LucaBonaldoIT). Source code, issues and contributions live on [GitHub](https://github.com/LucaBonaldoIT/prologez).
-
-### What runs your code
-
-Every cell executes on **SWI-Prolog 9**, compiled to WebAssembly and running in a background thread of your browser. Nothing is sent to a server. The first run takes a moment while the engine loads (about 4 MB, cached afterwards).
-
-### How cells work
-
-- A **program** cell adds clauses to a knowledge base. Press **Load** to check it for errors.
-- A **query** cell runs against *all program cells above it* in the lesson. Use **Ctrl/⌘ + Enter** to run, or **Enter** in a query box.
-- Every run starts from a clean slate: the program is loaded fresh, the query runs once, and anything it asserted is forgotten afterwards.
-- Up to ten solutions are shown per query. Ask for more specific ones, or use \`findall/3\`.
-- Runaway queries (infinite loops, endless recursion) are stopped automatically, or press **Stop**.
-- Your edits, exercise solutions and progress are stored in this browser only (localStorage). Use *Reset lesson* to start a lesson over.
-
-### Differences from the interactive toplevel
-
-- There is no keyboard input: \`read/1\` just hits end-of-file.
-- Answers are printed all at once instead of one by one with \`;\`.
-- \`halt/0\` stops the engine; it restarts on the next run.
-- Output of \`write\`, \`format\` and friends appears above the answers.
-
-### Going further
-
-When you're comfortable, install [SWI-Prolog](https://www.swi-prolog.org/) locally and read the [manual](https://www.swi-prolog.org/pldoc/doc_for?object=manual). Everything in this notebook runs there unchanged.
-`;
-
 function viewNotes() {
   view.innerHTML = `<article class="lesson"><header class="lesson-head"><div class="eyebrow">About</div><h1>About this notebook</h1></header><div class="prose">${renderMarkdown(NOTES)}</div></article>`;
 }
 
 /* ---------- router ---------- */
+// Real paths (/, /lesson/<id>/, /playground/, /about/) so that every page can be indexed. Every
+// path also exists as a pre-rendered static page (see scripts/prerender.mjs).
 let routeAbort = new AbortController();
+
+function parseRoute() {
+  const [name, arg] = location.pathname.split('/').filter(Boolean);
+  if (!name) return { name: 'home' };
+  if (name === 'lesson' && lessonIndex(arg) >= 0) return { name: 'lesson', id: arg };
+  if (name === 'playground') return { name: 'playground' };
+  if (name === 'about') return { name: 'about' };
+  return { name: 'notfound' };
+}
+
+function navigate(path) {
+  if (path !== location.pathname + location.search) history.pushState({}, '', path);
+  route();
+}
+
+function viewNotFound() {
+  view.innerHTML = `<article class="lesson"><header class="lesson-head"><div class="eyebrow">404</div><h1>Page not found</h1><p class="lede">There is nothing at this address. Try the <a href="/">lesson list</a> or the <a href="/playground/">playground</a>.</p></header></article>`;
+}
+
 function route() {
   routeAbort.abort();
   routeAbort = new AbortController();
-  const hash = location.hash.replace(/^#\/?/, '');
-  const [name, arg] = hash.split('/');
+  const r = parseRoute();
   let activeId = null;
-  if (name === 'lesson' && lessonIndex(arg) >= 0) {
-    activeId = arg;
-    viewLesson(arg);
-    document.title = `${lessons[lessonIndex(arg)].title} | PrologEZ`;
-  } else if (name === 'playground') {
+  if (r.name === 'lesson') {
+    activeId = r.id;
+    viewLesson(r.id);
+  } else if (r.name === 'playground') {
     activeId = 'playground';
     viewPlayground();
-    document.title = 'Playground | PrologEZ';
-  } else if (name === 'notes') {
-    activeId = 'notes';
+  } else if (r.name === 'about') {
+    activeId = 'about';
     viewNotes();
-    document.title = 'About | PrologEZ';
+  } else if (r.name === 'notfound') {
+    viewNotFound();
   } else {
     viewHome();
-    document.title = 'PrologEZ: learn logic programming by running it';
   }
+  applyMeta(pageMeta(r, lessons));
   renderSidebar(activeId);
   setNav(false);
   window.scrollTo(0, 0);
   $('#main').focus({ preventScroll: true });
   applyPendingHit();
 }
-window.addEventListener('hashchange', route);
+
+// Old hash links (#/lesson/x, #/playground, #/notes) keep working.
+(function upgradeLegacyHash() {
+  const m = /^#\/?(lesson\/([\w-]+)|playground|notes)?\/?$/.exec(location.hash);
+  if (!m || !location.hash) return;
+  const target = m[2]
+    ? lessonPath(m[2])
+    : m[1] === 'playground'
+      ? '/playground/'
+      : m[1] === 'notes'
+        ? '/about/'
+        : '/';
+  history.replaceState({}, '', target);
+})();
+
+// Internal links navigate without reloading the page.
+document.addEventListener('click', (e) => {
+  if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)
+    return;
+  const a = e.target.closest('a[href]');
+  if (!a || a.target || a.hasAttribute('download')) return;
+  const href = a.getAttribute('href');
+  if (!href.startsWith('/') || href.startsWith('//')) return;
+  e.preventDefault();
+  navigate(href);
+});
+window.addEventListener('popstate', route);
 route();
 
 // Start loading Prolog right away so the first Run is instant.

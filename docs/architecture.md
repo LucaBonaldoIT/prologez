@@ -27,6 +27,7 @@ stack, cut barriers) that solves a query one step at a time and records, for eac
 the clause used (variables renamed), the unifier, the new resolvent and the substitution. User predicates are
 resolved clause by clause; built-ins and library predicates run in one atomic step. `run({ ..., trace: true })`
 returns those steps, and `src/stepper.js` renders them behind the _Step_ button of each query cell.
+`scripts/prerender.mjs` runs after `vite build` and bakes a static page per route (see the README).
 `npm run verify:stepper` runs it over every lesson query and compares the number of solutions with the engine.
 
 `src/prolog/core.js` wraps this as `createRunner(SWIPL).run({ program, query, maxSolutions })`

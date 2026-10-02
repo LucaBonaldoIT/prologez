@@ -8,6 +8,7 @@ All notable changes are documented here. The format follows
 ### Added
 
 - 43 interactive lessons from facts and queries to DCGs, CLP(FD) and meta-interpreters, including the resolution and unification theory (substitutions, MGU, resolvents), Peano arithmetic, cons/nil lists, full relationality, tail recursion, term inspection, operators and DSLs, every metainterpreter variant, and a hands-on CLP(FD) lesson.
+- SEO: real URL paths, a pre-rendered static page per route with meta tags, canonical URLs, Open Graph/Twitter cards, JSON-LD, `sitemap.xml`, `robots.txt`, web manifest and social image; About page links to lucabonaldo.dev.
 - Interpreter stepper (_Step_ button on every query): resolution, unification and substitutions one step at a time, written as an explicit resolution machine in Prolog.
 - Notebook UI: editable program/query cells, auto-checked exercises, playground, progress tracking.
 - SWI-Prolog 9 (WebAssembly) running in a Web Worker, with inference/stack limits and a watchdog.
