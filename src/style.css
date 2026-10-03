@@ -750,13 +750,13 @@ main {
 /* query cells: a compact REPL line */
 .query-row {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 4px;
   padding: 4px 8px 4px 0;
 }
 .query-row .prompt {
   flex: none;
-  padding: 11px 0 0 16px;
+  padding: 4px 0 4px 16px;
   line-height: 1.6;
 }
 .query-row .editor {
@@ -767,7 +767,7 @@ main {
 }
 .query-row .cell-actions {
   flex: none;
-  padding-top: 5px;
+  padding: 4px;
 }
 .cell-actions {
   display: flex;
@@ -792,7 +792,7 @@ main {
 
 /* output */
 .out {
-  padding: 12px 16px 10px 18px;
+  padding: 4px 16px 8px 18px;
   border-top: 1px solid var(--line);
   background: color-mix(in srgb, var(--surface-2) 55%, var(--surface));
   font-size: 14px;
@@ -1070,7 +1070,20 @@ main {
   .cell-actions .btn span {
     display: inline;
   }
+  .query-row {
+    flex-wrap: wrap;
+    padding-right: 0;
+  }
+  .query-row .editor {
+    flex: 1 1 0;
+  }
+  .query-row .cell-actions {
+    flex: 1 1 100%;
+    justify-content: flex-end;
+    padding: 0 12px 4px;
+  }
   .btn {
+    padding: 4px 8px;
     min-height: 44px;
   }
   .btn-sm {
@@ -1089,6 +1102,9 @@ main {
   }
   .hero-cta .btn {
     flex: 1 1 100%;
+  }
+  .exercise-bar {
+    padding: 10px 8px 12px 8px;
   }
   .answers li {
     gap: 6px;

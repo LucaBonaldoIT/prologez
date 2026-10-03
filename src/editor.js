@@ -104,7 +104,7 @@ const theme = EditorView.theme({
   '&.cm-focused': { outline: 'none' },
   '.cm-content': {
     fontFamily: 'var(--mono)',
-    padding: '10px 0',
+    padding: '8px 0',
     caretColor: 'var(--accent)',
   },
   '.cm-line': { padding: '0 14px' },
