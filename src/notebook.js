@@ -270,7 +270,7 @@ export function renderLesson(
     const bar = h('div', 'exercise-bar');
     const checkBtn = actionButton('Check', ICON.run, 'btn-primary');
     const hintBtn = h('button', 'btn btn-ghost', 'Hint');
-    const solBtn = h('button', 'btn btn-ghost', 'Show solution');
+    const solBtn = h('button', 'btn btn-ghost', 'Solution');
     const resetBtn = h('button', 'btn btn-ghost', 'Reset');
     [hintBtn, solBtn, resetBtn].forEach((b) => (b.type = 'button'));
     checkBtn.type = 'button';
@@ -351,10 +351,8 @@ export function renderLesson(
           label: 'Solution',
         });
         solBox.hidden = false;
-        solBtn.textContent = 'Hide solution';
       } else {
         solBox.hidden = true;
-        solBtn.textContent = 'Show solution';
       }
     });
     resetBtn.addEventListener('click', () => {
