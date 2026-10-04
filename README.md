@@ -11,6 +11,13 @@
   <img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"/>
 </p>
 
+<p align="center">
+  <a href="https://prologez.lucabonaldo.dev"><strong>Launch the app</strong></a> ·
+  <a href="https://github.com/LucaBonaldoIT/prologez/issues">Report an issue</a> ·
+  <a href="CONTRIBUTING.md">Contributing</a> ·
+  <a href="SECURITY.md">Security</a>
+</p>
+
 <p align="center"><img src="docs/images/home.png" alt="PrologEZ home page" width="820"/></p>
 
 ## Features
