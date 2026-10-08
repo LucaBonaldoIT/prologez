@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>og-image</title>
+    <link rel="stylesheet" href="../../node_modules/@lucabonaldo/design/src/fonts.css" />
+    <link rel="stylesheet" href="../../node_modules/@lucabonaldo/design/src/tokens.css" />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      html,
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        background: var(--ds-paper);
+        color: var(--ds-ink);
+        font-family: var(--ds-font-text);
+      }
+      .bar {
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 14px;
+        background: var(--ds-vermilion);
+      }
+      .brand {
+        position: absolute;
+        left: 72px;
+        top: 84px;
+        display: flex;
+        align-items: center;
+        gap: 26px;
+      }
+      .logo {
+        display: grid;
+        place-items: center;
+        width: 96px;
+        height: 96px;
+        border-radius: 22px;
+        background: var(--ds-vermilion);
+        color: var(--ds-cream-bright);
+        font: 700 44px var(--ds-font-mono);
+      }
+      .wordmark {
+        font-family: var(--ds-font-display);
+        font-size: 74px;
+        font-weight: 560;
+        letter-spacing: -0.01em;
+      }
+      .wordmark span {
+        color: var(--ds-vermilion);
+      }
+      h1 {
+        position: absolute;
+        left: 72px;
+        top: 222px;
+        font-family: var(--ds-font-display);
+        font-size: 66px;
+        font-weight: 520;
+        letter-spacing: -0.015em;
+        line-height: 1.05;
+      }
+      h1 span {
+        color: var(--ds-vermilion);
+      }
+      .lede {
+        position: absolute;
+        left: 72px;
+        top: 316px;
+        width: 1060px;
+        font-size: 29px;
+        line-height: 1.42;
+        color: rgba(26, 23, 18, 0.68);
+      }
+      .code {
+        position: absolute;
+        left: 72px;
+        top: 432px;
+        width: 680px;
+        padding: 22px 28px;
+        border: 2px solid rgba(26, 23, 18, 0.16);
+        border-radius: 14px;
+        background: var(--ds-paper-raised);
+        font: 26px/1.5 var(--ds-font-mono);
+      }
+      .c-comment {
+        color: #8a8578;
+      }
+      .c-prompt {
+        color: var(--ds-vermilion);
+      }
+      .c-answer {
+        color: #0b7a6b;
+        font-weight: 700;
+      }
+      .url {
+        position: absolute;
+        right: 72px;
+        bottom: 46px;
+        font-size: 26px;
+        font-weight: 600;
+        color: var(--ds-vermilion);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bar"></div>
+    <div class="brand">
+      <div class="logo">?-</div>
+      <div class="wordmark">Prolog<span>EZ</span></div>
+    </div>
+    <h1>Learn Prolog by running it<span>.</span></h1>
+    <p class="lede">
+      Interactive lessons, auto-checked exercises and a<br />step-by-step interpreter. Real
+      SWI-Prolog in your browser.
+    </p>
+    <div class="code">
+      <div class="c-comment">% a taste</div>
+      <div><span class="c-prompt">?-</span> grandparent(tom, Who).</div>
+      <div class="c-answer">Who = ann.</div>
+    </div>
+    <p class="url">prologez.lucabonaldo.dev</p>
+  </body>
+</html>

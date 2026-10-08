@@ -1,110 +1,74 @@
-/* ───────── tokens ───────── */
+/* ───────── tokens ─────────
+   Colors, fonts and shadow come from @lucabonaldo/design (paper & ink), which also handles
+   light/dark. The names below are this app's aliases for the design system's role tokens; only
+   the course-specific colors (progress, syntax, stepper) are defined here. */
 :root {
-  --bg: #f7f6f2;
-  --surface: #ffffff;
-  --surface-2: #f0eee7;
-  --ink: #1d1c1a;
-  --ink-2: #3c3a36;
-  --muted: #6e6a60;
-  --line: #e2dfd5;
-  --line-strong: #cfcbbe;
-  --accent: #b02e0c;
-  --accent-ink: #ffffff;
-  --accent-soft: #fbe9e3;
-  --accent-hover: #8f240a;
-  --prog: #b45309;
-  --prog-soft: #fdf3e1;
-  --ok: #15803d;
-  --ok-soft: #e6f6ec;
-  --err: #b42318;
-  --err-soft: #fdecea;
-  --warn: #92600a;
-  --warn-soft: #fff6dd;
-  --shadow: 0 1px 2px rgb(30 25 10 / 6%), 0 4px 16px rgb(30 25 10 / 5%);
-  --syn-comment: #8a8578;
-  --syn-var: #b4235a;
-  --syn-atom: #1d1c1a;
-  --syn-number: #0b7a6b;
-  --syn-string: #a14a00;
-  --syn-op: #b02e0c;
-  --step-resolve: #6a3fc4;
-  --syn-builtin: #2457c5;
-  --syn-bracket: #6e6a60;
-  --sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-  --mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  --bg: var(--ds-bg);
+  --surface: var(--ds-surface);
+  --surface-2: var(--ds-bg-soft);
+  --ink: var(--ds-text);
+  --ink-2: color-mix(in srgb, var(--ds-text) 84%, var(--ds-bg));
+  --muted: var(--ds-text-soft);
+  --line: var(--ds-line);
+  --line-strong: var(--ds-line-strong);
+  /* --accent for text and outlines; --accent-fill (+ --accent-ink) for filled shapes */
+  --accent: var(--ds-accent);
+  --accent-fill: var(--ds-accent-fill);
+  --accent-ink: var(--ds-on-accent);
+  --accent-soft: var(--ds-accent-soft);
+  --accent-hover: var(--ds-accent-fill-hover);
+  --ok: var(--ds-ok);
+  --ok-soft: var(--ds-ok-soft);
+  --err: var(--ds-err);
+  --err-soft: var(--ds-err-soft);
+  --warn: var(--ds-warn);
+  --warn-soft: var(--ds-warn-soft);
+  --shadow: var(--ds-shadow);
+  --sans: var(--ds-font-text);
+  --mono: var(--ds-font-mono);
+  --display: var(--ds-font-display);
   --radius: 12px;
   --topbar-h: 56px;
   --sidebar-w: 300px;
-  color-scheme: light;
+
+  /* course-specific */
+  --prog: #b45309;
+  --prog-soft: #fdf3e1;
+  --syn-comment: #8a8578;
+  --syn-var: #b4235a;
+  --syn-atom: var(--ds-text);
+  --syn-number: #0b7a6b;
+  --syn-string: #a14a00;
+  --syn-op: var(--ds-accent);
+  --step-resolve: #6a3fc4;
+  --syn-builtin: #2457c5;
+  --syn-bracket: var(--ds-text-soft);
 }
 
 :root[data-theme='dark'] {
-  --bg: #121214;
-  --surface: #1a1a1f;
-  --surface-2: #232329;
-  --ink: #ecebe6;
-  --ink-2: #cdcbc4;
-  --muted: #9b988f;
-  --line: #2c2c34;
-  --line-strong: #3d3d48;
-  --accent: #b02e0c;
-  --accent-ink: #ffffff;
-  --accent-soft: #3a1a12;
-  --accent-hover: #c93a15;
   --prog: #f0b45a;
   --prog-soft: #2a2114;
-  --ok: #5fd08a;
-  --ok-soft: #142a1c;
-  --err: #ff8d82;
-  --err-soft: #3a1b19;
-  --warn: #f0c466;
-  --warn-soft: #2e2512;
-  --shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 4px 16px rgb(0 0 0 / 30%);
-  --syn-comment: #7f7c73;
+  --syn-comment: #8a8478;
   --syn-var: #ff8bb4;
-  --syn-atom: #ecebe6;
   --syn-number: #6fe0cc;
   --syn-string: #f0b45a;
   --syn-op: #a99bff;
   --step-resolve: #b79cff;
   --syn-builtin: #7fb0ff;
-  --syn-bracket: #9b988f;
-  color-scheme: dark;
 }
 
+/* no-JS fallback; with JS the design system's init script always sets data-theme */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    --bg: #121214;
-    --surface: #1a1a1f;
-    --surface-2: #232329;
-    --ink: #ecebe6;
-    --ink-2: #cdcbc4;
-    --muted: #9b988f;
-    --line: #2c2c34;
-    --line-strong: #3d3d48;
-    --accent: #b02e0c;
-    --accent-ink: #ffffff;
-    --accent-soft: #3a1a12;
-    --accent-hover: #c93a15;
+  :root:not([data-theme]) {
     --prog: #f0b45a;
     --prog-soft: #2a2114;
-    --ok: #5fd08a;
-    --ok-soft: #142a1c;
-    --err: #ff8d82;
-    --err-soft: #3a1b19;
-    --warn: #f0c466;
-    --warn-soft: #2e2512;
-    --shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 4px 16px rgb(0 0 0 / 30%);
-    --syn-comment: #7f7c73;
+    --syn-comment: #8a8478;
     --syn-var: #ff8bb4;
-    --syn-atom: #ecebe6;
     --syn-number: #6fe0cc;
     --syn-string: #f0b45a;
     --syn-op: #a99bff;
     --step-resolve: #b79cff;
     --syn-builtin: #7fb0ff;
-    --syn-bracket: #9b988f;
-    color-scheme: dark;
   }
 }
 
@@ -183,8 +147,8 @@ body.nav-open {
   cursor: default;
 }
 .btn-primary {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: var(--accent-fill);
+  border-color: var(--accent-fill);
   color: var(--accent-ink);
 }
 .btn-primary:hover {
@@ -256,8 +220,9 @@ body.nav-open {
   align-items: center;
   gap: 10px;
   color: var(--ink);
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 560;
   text-decoration: none;
 }
 .logo {
@@ -266,7 +231,7 @@ body.nav-open {
   width: 32px;
   height: 32px;
   border-radius: 9px;
-  background: var(--accent);
+  background: var(--accent-fill);
   color: var(--accent-ink);
   font: 700 15px var(--mono);
 }
@@ -325,14 +290,14 @@ main {
 .progress-bar {
   height: 6px;
   border-radius: 999px;
-  background: var(--surface-2);
+  background: var(--line);
   overflow: hidden;
 }
 .progress-bar span {
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: var(--accent);
+  background: var(--accent-fill);
   transition: width 0.3s;
 }
 .nav-group {
@@ -456,7 +421,6 @@ main {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
-  box-shadow: var(--shadow);
   font-size: 14px;
   line-height: 1.7;
 }
@@ -502,12 +466,10 @@ main {
   text-decoration: none;
   transition:
     border-color 0.12s,
-    transform 0.12s,
-    box-shadow 0.12s;
+    transform 0.12s;
 }
 .card:hover {
   border-color: var(--accent);
-  box-shadow: var(--shadow);
   transform: translateY(-1px);
 }
 .card-num {
@@ -553,9 +515,11 @@ main {
 }
 .lesson-head h1 {
   margin: 6px 0 8px;
-  font-size: clamp(28px, 4.5vw, 40px);
-  line-height: 1.12;
-  letter-spacing: -0.025em;
+  font-family: var(--display);
+  font-size: clamp(30px, 4.8vw, 44px);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
 }
 .lede {
   margin: 0 0 16px;
@@ -604,9 +568,11 @@ main {
 .prose h2 {
   margin: 28px 0 10px;
   color: var(--ink);
-  font-size: 22px;
-  line-height: 1.25;
-  letter-spacing: -0.015em;
+  font-family: var(--display);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 .prose h3 {
   margin: 24px 0 8px;
@@ -708,7 +674,6 @@ main {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
-  box-shadow: var(--shadow);
   overflow: hidden;
 }
 .cell-head {

@@ -1,4 +1,14 @@
+import '@lucabonaldo/design/fonts.css';
+import '@lucabonaldo/design/tokens.css';
 import './style.css';
+import {
+  getStoredTheme,
+  initTheme,
+  isDark,
+  onThemeChange,
+  setTheme,
+  toggleTheme,
+} from '@lucabonaldo/design';
 import { lessons, parts } from './lessons/index.js';
 import { mountSearch } from './search.js';
 import { NOTES } from './about.js';
@@ -80,29 +90,25 @@ menuBtn.addEventListener('click', () => setNav(!document.body.classList.contains
 $('.scrim').addEventListener('click', () => setNav(false));
 document.addEventListener('keydown', (e) => e.key === 'Escape' && setNav(false));
 
-/* theme */
-const themeBtn = $('.theme-btn');
-const currentTheme = () =>
-  document.documentElement.dataset.theme ||
-  (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-function paintThemeBtn() {
-  themeBtn.innerHTML = currentTheme() === 'dark' ? ICONS.sun : ICONS.moon;
-  themeBtn.setAttribute(
-    'aria-label',
-    currentTheme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode',
-  );
-}
-themeBtn.addEventListener('click', () => {
-  const next = currentTheme() === 'dark' ? 'light' : 'dark';
-  document.documentElement.dataset.theme = next;
-  try {
-    localStorage.setItem('plnb:theme', next);
-  } catch {
-    /* ignore */
+/* theme: state, persistence and theme-color come from the design system */
+// carry over a choice saved before the shared theme cookie existed
+try {
+  const legacy = localStorage.getItem('plnb:theme');
+  if (legacy === 'light' || legacy === 'dark') {
+    if (!getStoredTheme()) setTheme(legacy);
+    localStorage.removeItem('plnb:theme');
   }
-  paintThemeBtn();
-});
-matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paintThemeBtn);
+} catch {
+  /* ignore */
+}
+const themeBtn = $('.theme-btn');
+function paintThemeBtn() {
+  themeBtn.innerHTML = isDark() ? ICONS.sun : ICONS.moon;
+  themeBtn.setAttribute('aria-label', isDark() ? 'Switch to light mode' : 'Switch to dark mode');
+}
+themeBtn.addEventListener('click', toggleTheme);
+onThemeChange(paintThemeBtn);
+initTheme();
 paintThemeBtn();
 
 /* ---------- sidebar ---------- */
